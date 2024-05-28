@@ -94,7 +94,7 @@ Este proyecto implementa una arquitectura de 3 capas (Presentación, Negocio y D
      - Clases: UserRepository, UserRepositoryImpl, RoRuDecorator: Manejar las operaciones de almacenamiento y recuperación de datos.
 
 ### Estructura de Archivos
-
+```bash
 src/
 │
 ├── data/
@@ -113,3 +113,4 @@ src/
 │   └── UserBuilder.java
 │ 
 └── Main.java
+```
