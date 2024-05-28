@@ -47,19 +47,19 @@ Este proyecto implementa una arquitectura de 3 capas (Presentación, Negocio y D
 
 4. **Interface Segregation Principle (ISP)**
 
-Aplicable a futuras expansiones donde se dividan interfaces más grandes en interfaces específicas y pequeñas.
+    Aplicable a futuras expansiones donde se dividan interfaces más grandes en interfaces específicas y pequeñas.
 
 5. **Dependency Inversion Principle (DIP)**
 
      - Clase: UserService
-       - Dependencia: UserRepository (interfaz)
-         Depende de una abstracción (UserRepository), no de una implementación concreta.
+     - Dependencia: UserRepository (interfaz)
+       Depende de una abstracción (UserRepository), no de una implementación concreta.
 ### Patrones de Diseño
 1. **Builder (Patrón Creacional)**
 
      - Clases: UserBuilder, UserRepositoryBuilder
      - Propósito: Construcción de objetos User y UserRepositoryImpl de manera flexible.
-     - Ejemplo:
+       Ejemplo:
      ```java
      Copy code
      User usuario1 = new UserBuilder()
@@ -71,7 +71,7 @@ Aplicable a futuras expansiones donde se dividan interfaces más grandes en inte
 
      - Clase: RoRuDecorator
      - Propósito: Añadir funcionalidades adicionales (registro de operaciones) a los objetos UserRepository.
-     - Ejemplo:
+       Ejemplo:
      ```java
       RoRuDecorator repoDecorado = new RoRuDecorator(repo);
      ```
