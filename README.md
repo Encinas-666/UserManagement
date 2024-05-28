@@ -69,84 +69,32 @@ Aplicable a futuras expansiones donde se dividan interfaces más grandes en inte
      ```
 2. **Decorator (Patrón Estructural)**
 
-Clase: RoRuDecorator
-Propósito: Añadir funcionalidades adicionales (registro de operaciones) a los objetos UserRepository.
-Ejemplo:
-java
-Copy code
-RoRuDecorator repoDecorado = new RoRuDecorator(repo);
-Strategy (Patrón de Comportamiento)
+     - Clase: RoRuDecorator
+     - Propósito: Añadir funcionalidades adicionales (registro de operaciones) a los objetos UserRepository.
+     - Ejemplo:
+     ```java
+      RoRuDecorator repoDecorado = new RoRuDecorator(repo);
+     ```
+3. **Strategy (Patrón de Comportamiento)**
 
-Uso Implícito: Uso de interfaces y la inyección de dependencias sigue el mismo principio.
-Propósito: Permitir que UserService interactúe con cualquier implementación de UserRepository sin conocer los detalles de la implementación.
-Arquitectura de 3 Capas
-Capa de Presentación (UI)
+     - Uso Implícito: Uso de interfaces y la inyección de dependencias sigue el mismo principio.
+     - Propósito: Permitir que UserService interactúe con cualquier implementación de UserRepository sin conocer los detalles de la implementación.
 
-Clase: UserUI
-Responsabilidad: Manejar la interacción con el usuario y captura de datos.
-Código:
-java
-Copy code
-public class UserUI {
-    public void run() {
-        Scanner scanner = new Scanner(System.in);
-        UserRepositoryBuilder repoBuilder = new UserRepositoryBuilder();
-        UserRepositoryImpl repo = repoBuilder.build();
-        RoRuDecorator repoDecorado = new RoRuDecorator(repo);
-        UserService service = new UserService(repoDecorado);
-        
-        while (true) {
-            // Lógica de menú y opciones
-        }
-    }
-}
-Capa de Negocio (Service)
+### Arquitectura de 3 Capas
+1. **Capa de Presentación (UI)**
 
-Clase: UserService
-Responsabilidad: Contiene la lógica de negocio y actúa como intermediario entre la capa de presentación y la capa de datos.
-Código:
-java
-Copy code
-public class UserService {
-    private UserRepository userRepository;
-    
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+     - Clase: UserUI: Manejar la interacción con el usuario y captura de datos.
+   
+2. **Capa de Negocio (Service)**
+   
+     - Clase: UserService: Contiene la lógica de negocio y actúa como intermediario entre la capa de presentación y la capa de datos.
 
-    // Métodos para registrar, obtener, eliminar usuarios
-}
-Capa de Datos (Repository)
+3. **Capa de Datos (Repository)**
 
-Clases: UserRepository, UserRepositoryImpl, RoRuDecorator
-Responsabilidad: Manejar las operaciones de almacenamiento y recuperación de datos.
-Código:
-java
-Copy code
-public interface UserRepository {
-    void saveUser(User user);
-    User getUser(String email);
-    void deleteUser(String email);
-    List<User> getAllUsers();
-}
+     - Clases: UserRepository, UserRepositoryImpl, RoRuDecorator: Manejar las operaciones de almacenamiento y recuperación de datos.
 
-public class UserRepositoryImpl implements UserRepository {
-    private Map<String, User> users;
-    
-    public UserRepositoryImpl(Map<String, User> users) {
-        this.users = users;
-    }
-    
-    // Implementación de métodos
-}
+### Estructura de Archivos
 
-public class RoRuDecorator extends UserRepositoryDecorator {
-    // Implementación de métodos con funcionalidades adicionales
-}
-Código Fuente
-Estructura de Archivos
-plaintext
-Copy code
 src/
 │
 ├── data/
@@ -155,115 +103,13 @@ src/
 │   ├── UserRepositoryBuilder.java
 │   └── UserRepositoryImpl.java
 │
-├── domain/
-│   ├── User.java
-│   └── UserBuilder.java
-│
 ├── presentation/
-│   ├── Main.java
+│   ├── UtilsUser.java
 │   └── UserUI.java
 │
 ├── service/
-│   └── UserService.java
-│
-└── utils/
-    └── UtilsUser.java
-Clases y Rutas
-data/RoRuDecorator.java:
-
-java
-Copy code
-public class RoRuDecorator extends UserRepositoryDecorator {
-    // Implementación de métodos con registro de operaciones
-}
-data/UserRepository.java:
-
-java
-Copy code
-public interface UserRepository {
-    void saveUser(User user);
-    User getUser(String email);
-    void deleteUser(String email);
-    List<User> getAllUsers();
-}
-data/UserRepositoryBuilder.java:
-
-java
-Copy code
-public class UserRepositoryBuilder {
-    private Map<String, User> users = new HashMap<>();
-    
-    public UserRepositoryBuilder addUser(User user) {
-        users.put(user.getEmail(), user);
-        return this;
-    }
-    
-    public UserRepositoryImpl build() {
-        return new UserRepositoryImpl(users);
-    }
-}
-data/UserRepositoryImpl.java:
-
-java
-Copy code
-public class UserRepositoryImpl implements UserRepository {
-    private Map<String, User> users;
-    
-    public UserRepositoryImpl(Map<String, User> users) {
-        this.users = users;
-    }
-    
-    // Implementación de métodos
-}
-domain/User.java:
-
-java
-Copy code
-public class User {
-    private String name;
-    private String email;
-    
-    // Getters y Setters
-}
-domain/UserBuilder.java:
-
-java
-Copy code
-public class UserBuilder {
-    private String name;
-    private String email;
-    
-    // Métodos de construcción
-}
-presentation/Main.java:
-
-java
-Copy code
-public class Main {
-    public static void main(String[] args) {
-        UserUI userUI = new UserUI();
-        userUI.run();
-    }
-}
-presentation/UserUI.java:
-
-java
-Copy code
-public class UserUI {
-    public void run() {
-        // Lógica de menú y opciones
-    }
-}
-service/UserService.java:
-
-java
-Copy code
-public class UserService {
-    private UserRepository userRepository;
-    
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-    
-    // Métodos para registrar, obtener, eliminar usuarios
-}
+│   ├──UserService.java
+│   ├── User.java
+│   └── UserBuilder.java
+│ 
+└── Main.java
